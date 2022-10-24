@@ -60,7 +60,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=241"
 
 ## コマンド履歴検索
 function peco-history-selection() {
-  BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | peco`
+  BUFFER=`history -n 1 | tac | awk '!a[$0]++' | peco`
   CURSOR=$#BUFFER
   zle reset-prompt
 }
@@ -129,7 +129,7 @@ if [[ -t 0 ]]; then
 fi
 
 ## エイリアス
-alias ls="ls -G"
+alias ls="ls --color"
 abbrev-alias l="ls"
 abbrev-alias ll="ls -l"
 abbrev-alias la="ls -la"
@@ -158,7 +158,12 @@ abbrev-alias v="vim"
 abbrev-alias d="docker"
 abbrev-alias dc="docker compose"
 
+# Set PATH, MANPATH, etc., for Homebrew.
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 ## node
 eval "$(nodenv init -)"
 
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
+
+export EDITOR=vim
